@@ -137,3 +137,25 @@ int main(int argc, char *argv[]) {
 }
 // gcc exam.c -o exam
 //./exam test.py python
+/*I/P
+x = 5
+y = 10
+name = "ayush"
+O/P
+1. < Identifier , 1 , 1, x>
+2. < Symbol , 1 , 3, =>
+3. < Number , 1 , 5, 5>
+4. < Identifier , 2 , 1, y>
+5. < Symbol , 2 , 3, =>
+6. < Number , 2 , 5, 10>
+7. < Identifier , 3 , 1, name>
+8. < Symbol , 3 , 3, =>
+9. < String , 3 , 5, "ayush">
+
+Symbol Table:
+Index   Name    Type    Size
+-----   ----    ----    ----
+1       x      var      4
+2       y      var      4
+3       name      var      4
+*/
