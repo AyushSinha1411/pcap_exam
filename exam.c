@@ -2,32 +2,24 @@
 #include <stdlib.h> // Include standard library (for malloc, free, etc.)
 #include <string.h> // Include string manipulation library
 #include <ctype.h> // Include character type checking library
-
 #define MAX_TOKENS 100 // Define maximum number of tokens
 #define MAX_ID_LEN 50 // Define maximum length of an identifier
-
-// Structure to store symbol table entries
-typedef struct {
+typedef struct {// Structure to store symbol table entries
     int index; // Index of the symbol in the table
     char name[MAX_ID_LEN]; // Name of the identifier
     char type[10]; // Data type of the identifier
     int size; // Size of the identifier (e.g., in bytes)
 } Symbol;
-
 Symbol symbolTable[MAX_TOKENS]; // Declare the symbol table as an array of Symbol structures
 int symbolCount = 0; // Initialize the count of symbols in the table
-
-// Function to check if an identifier already exists in the symbol table
-int lookupSymbol(char *name) {
+int lookupSymbol(char *name) {// Function to check if an identifier already exists in the symbol table
     for (int i = 0; i < symbolCount; i++) { // Iterate through the symbol table
         if (strcmp(symbolTable[i].name, name) == 0) // Compare the given name with the name in the symbol table
             return symbolTable[i].index; // Return the index if the name is found
     }
     return -1; // Return -1 if the name is not found
 }
-
-// Function to insert a new identifier into the symbol table
-int insertSymbol(char *name, char *type, int size) {
+int insertSymbol(char *name, char *type, int size) {// Function to insert a new identifier into the symbol table
     int index = lookupSymbol(name); // Check if the symbol already exists
     if (index == -1) { // If the symbol doesn't exist
         symbolTable[symbolCount].index = symbolCount + 1; // Assign a new index
@@ -39,12 +31,9 @@ int insertSymbol(char *name, char *type, int size) {
     }
     return index; // Return the existing index if the symbol already exists
 }
-
-// Function to tokenize the input file
-void getNextToken(FILE *fp) {
+void getNextToken(FILE *fp) {// Function to tokenize the input file
     char ch, buffer[MAX_ID_LEN]; // Character to read from file, buffer to store tokens
     int line = 1, col = 0, tokenIndex = 1; // Initialize line number, column number, and token index
-
     while ((ch = fgetc(fp)) != EOF) { // Read character by character until EOF
         col++; // Increment column number
         if (isspace(ch)) { // Handling whitespace
@@ -54,7 +43,6 @@ void getNextToken(FILE *fp) {
             }
             continue; // Skip whitespace
         }
-
         if (isalpha(ch) || ch == '_') {  // Identifiers and keywords
             int i = 0;
             buffer[i++] = ch; // Store the first character of the identifier
@@ -124,9 +112,7 @@ void getNextToken(FILE *fp) {
         }
     }
 }
-
-// Function to print the symbol table
-void printSymbolTable() {
+void printSymbolTable() {// Function to print the symbol table
     printf("\nSymbol Table:\n"); // Print header
     printf("Index   Name    Type    Size\n"); // Print column headers
     printf("-----   ----    ----    ----\n"); // Print separator
@@ -134,7 +120,6 @@ void printSymbolTable() {
         printf("%d       %s      %s      %d\n", symbolTable[i].index, symbolTable[i].name, symbolTable[i].type, symbolTable[i].size); // Print each entry
     }
 }
-
 int main(int argc, char *argv[]) {
     if (argc < 2) { // Check if filename is provided
         printf("Usage: %s <filename>\n", argv[0]); // Print usage message
@@ -145,10 +130,8 @@ int main(int argc, char *argv[]) {
         printf("Error opening file %s\n", argv[1]); // Print error message
         return 1; // Exit with error
     }
-
     getNextToken(fp); // Tokenize the file
     fclose(fp); // Close the file
-
     printSymbolTable(); // Print the symbol table
     return 0; // Exit successfully
 }
